@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 
 import gtfs_realtime_1007_pb2
+from train import Train
 
 # from google.protobuf.json_format import MessageToDict, MessageToJson
 
@@ -20,5 +21,8 @@ feed = gtfs_realtime_1007_pb2.FeedMessage()
 response = requests.get(url, headers=headers)
 if response.status_code == 200:
     feed.ParseFromString(response.content)
+    trains = []
     for entity in feed.entity:
-        print(entity.id)
+        train = Train(entity.id)
+        train.get_train_data(entity)
+        trains.append(train)
