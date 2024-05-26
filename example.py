@@ -23,6 +23,5 @@ if response.status_code == 200:
     feed.ParseFromString(response.content)
     trains = []
     for entity in feed.entity:
-        train = Train(entity.id)
-        train.get_train_data(entity)
+        train = Train(entity)
         trains.append(train)
